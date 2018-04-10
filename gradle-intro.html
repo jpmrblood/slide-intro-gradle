@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Dasar-dasar Gradle -- Jan Peter Alexander Rajagukguk</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/league.css">
+<!--   <link rel="stylesheet" href="css/theme/mozilla-devrel-dark.css"> -->
+
+  <!-- Theme used for syntax highlighting of code -->
+  <!--link rel="stylesheet" href="lib/css/zenburn.css"-->
+  <link rel="stylesheet" href="lib/css/dracula.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>Dasar-dasar Gradle</h1>
+        <p>Jan Peter Alexander Rajagukguk</p>
+      </section>
+      <section>
+      	<section>
+          <h2>Pemasangan Gradle</h2>
+
+          Lewat sistem operasi
+          <pre><code data-trim data-noescape>
+              $ sudo apt install gradle
+          </code></pre>
+
+          Lewat pembungkus Gradle
+          <pre><code  data-trim data-noescape>
+$ gradle wrapper --gradle-version 2.14 \
+     init --type java-library
+:wrapper
+:init
+
+BUILD SUCCESSFUL
+
+Total time: 2.229 secs
+          </code></pre>
+        </section>
+        <section>
+        	<h2>Gradle Versi Terbaru</h2>
+        	
+        		<p>Memasang gradle:</p>
+        	<pre><code style="bash" data-trim  data-noescape>
+        		$ gradle wrapper --gradle-version 4.6
+        	</code></pre>
+        	Membuat proyek aplikasi Java baru:
+        	<pre><code style="bash" data-trim>
+        		$ ./gradlew init --type java-application \ 
+        		     --test-framework spock
+        	</code></pre>
+        	<blockquote>
+        		Java Application tidak ada pada versi 2.10 (versi OS). 
+        		Itu sebabnya, pembungkus versi terbaru harus diunduh
+        		terlebih dahulu.
+        	</blockquote>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Struktur Gradle</h2>
+<pre><code  data-trim data-noescape>.
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── build.gradle
+├── settings.gradle
+└── src
+    ├── main
+    │   └── java
+    │       └── App.java
+    └── test
+        └── groovy
+            └── AppTest.groovy
+</code></pre>
+        </section>
+          <section>
+              <h2> Skrip Gradle</h2>
+              <pre><code  data-trim data-noescape>
+              ├── gradle
+              │   └── wrapper
+              │       ├── gradle-wrapper.jar
+              │       └── gradle-wrapper.properties
+              ├── gradlew
+              ├── gradlew.bat
+              </code></pre>
+          </section>
+        <section >
+          <h2>Konfigurasi Proyek Gradle</h2>
+          <pre><code  data-trim data-noescape>
+            ├── build.gradle
+            ├── settings.gradle
+          </code></pre>
+        </section>
+        <section>
+          <h2>Kode Sumber</h2>
+<pre><code  data-trim data-noescape>
+└── src
+    ├── main
+    │   └── java
+    │       └── App.java
+    └── test
+        └── groovy
+            └── AppTest.groovy
+</code></pre>
+          </script>
+        </section>
+    </section>
+    <section>
+    	<h2><code>settings.gradle</code></h2>
+    	<pre><code class="gradle">/*
+// To declare projects as part of a multi-project build 
+// use the 'include' method
+include 'shared'
+include 'api'
+include 'services:webservice'
+*/
+rootProject.name = 'test'
+</code></pre>
+<blockquote>Konfigurasi untuk sub-proyek/sub-module.
+Abaikan saja kalau cuma proyek tunggal.
+</blockquote>
+    </section>
+    <section>
+    	<h2><code>build.gradle</code></h2>
+    	<pre><code class='gradle'>apply plugin: 'java'
+repositoriesjcenter()
+}
+{
+dependencies {
+  compile 'org.slf4j:slf4j-api:1.7.13'
+  testCompile 'junit:junit:3.8.2'
+}
+</code></pre>
+<blockquote>
+	Konfigurasi untuk mengompilasi proyek Gradle
+ditaruh di sini
+</blockquote>
+    </section>
+    <section>
+    	<h2>Perintah-perintah Gradle</h2>
+    	<dl>
+    		<dt>Perintah Gradle: <code style="gradle">tasks</code></dt>
+    		<dd>Sekumpulan Perintah dibundel dalam satu <em>plugin</em></dd>
+    		<dt>Cara panggil:</dt>
+    		<dd><pre><code style="bash">$ ./gradlew tasks
+$ ./gradlew tasks --all</code></pre></dd>
+    	</dl>
+    </section>
+    <section>
+    	<h1>Pembuatan Aplikasi Java</h1>
+    </section>
+    <section>
+    	<section>
+    	<h2>Memasang Gradle</h2>
+    	<pre><code style="bash" data-trim data-noescape>
+    		$ mkdir test && cd test
+    		$ gradle wrapper --gradle-version 4.6
+    		$ ./gradlew init --type java-application \ 
+        		--test-framework spock
+        </code></pre>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+## Struktur Proyek
+
+```bash
+.
+├── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── settings.gradle
+└── src
+    ├── main
+    │   └── java
+    │       └── App.java
+    └── test
+        └── groovy
+            └── AppTest.groovy
+```
+        	</script>
+        </section>
+    </section>
+    <section>
+    	<section>
+    	<h2>Kompilasi Aplikasi</h2>
+    	<pre><code style='bash'>$ ./gradlew build
+
+BUILD SUCCESSFUL in 3s
+7 actionable tasks: 7 executed
+</code></pre>
+<blockquote>Biasanya untuk pertama kali Gradle akan mengunduh
+semua paket yang dibutuhkan.</blockquote>
+</section>
+<section>
+	<h2>Arsip Distribusi</h2>
+	<pre><code style="bash" data-trim>
+build/distributions/
+├── test.tar
+└── test.zip
+</code></pre>
+<blockquote>
+	Berkas-berkas ini berisi aplikasi yang siap di-<em>deploy</em> 
+	di mana saja. Sudah ada Jar, pustaka, dan skrip untuk mengeksekusi.
+</blockquote>
+</section>
+<section>
+	<h2>Isi Arsip Zip <code>test.zip</code></h2>
+	<pre><code style="bash" data-trim>
+test
+ ├─bin
+ │  ├─test
+ │  └─test.bat
+ └─lib
+    ├─animal-sniffer-annotations-1.14.jar
+    ├─error_prone_annotations-2.0.18.jar
+    ├─guava-23.0.jar
+    ├─j2objc-annotations-1.1.jar
+    ├─jsr305-1.3.9.jar
+    └─test.jar
+</code></pre>
+<blockquote>
+	Arsip ini yang didistribusikan ke mana-mana.
+</blockquote>
+</section>
+    </section>
+    <section>
+    	<section>
+    	<h2>Pengeksekusian Aplikasi</h2>
+    	<p>Dengan info dari Gradle:</p>
+    	<pre><code style="bash" data-trim>$ ./gradlew run
+
+> Task :run 
+Hello world.
+
+
+BUILD SUCCESSFUL in 0s
+2 actionable tasks: 1 executed, 1 up-to-date
+    	</code></pre>
+    	<p>Langsung keluaran aplikasi:</p>
+    	<pre><code style="bash" data-trim>$ ./gradlew -q run
+Hello world.
+    	</code></pre>
+    </section>
+    <section>
+    	<h2>BONUS: Berkas Distribusi
+    	<pre><code style="bash" data-trim data-noescape>
+$ unzip test.zip
+$ ./test/bin/test
+Hello world.
+
+    	</code></pre>
+    </section>
+</section>
+    <section>
+    	<h1>Q/A</h1>
+    </section>
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      dependencies: [{
+          src: 'plugin/markdown/marked.js'
+        },
+        {
+          src: 'plugin/markdown/markdown.js'
+        },
+        {
+          src: 'plugin/notes/notes.js',
+          async: true
+        },
+        {
+          src: 'plugin/highlight/highlight.js',
+          async: true,
+          callback: function() {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+      ],
+      slideNumber: true,
+    });
+  </script>
+</body>
+
+</html>
