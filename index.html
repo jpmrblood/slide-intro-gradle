@@ -93,41 +93,35 @@ Total time: 2.229 secs
             └── AppTest.groovy
 </code></pre>
         </section>
-        <section data-markdown>
-          <script type="text/template">
-            ## Konfigurasi Proyek Gradle
-            ```
-            ├── build.gradle
-            ├── settings.gradle
-            ```
-          </script>
-        </section>
-          <section data-markdown>
-            <script type="text/template">
-              ## Skrip Gradle
-              ```
+          <section>
+              <h2> Skrip Gradle</h2>
+              <pre><code  data-trim data-noescape>
               ├── gradle
               │   └── wrapper
               │       ├── gradle-wrapper.jar
               │       └── gradle-wrapper.properties
               ├── gradlew
               ├── gradlew.bat
-              ```
-            </script>
+              </code></pre>
           </section>
-
-        <section data-markdown>
-          <script type="text/template">
-            ## Kode Sumber
-            ```
-            └── src
-                ├── main
-                │   └── java
-                │       └── App.java
-                └── test
-                    └── groovy
-                        └── AppTest.groovy
-            ```
+        <section >
+          <h2>Konfigurasi Proyek Gradle</h2>
+          <pre><code  data-trim data-noescape>
+            ├── build.gradle
+            ├── settings.gradle
+          </code></pre>
+        </section>
+        <section>
+          <h2>Kode Sumber</h2>
+<pre><code  data-trim data-noescape>
+└── src
+    ├── main
+    │   └── java
+    │       └── App.java
+    └── test
+        └── groovy
+            └── AppTest.groovy
+</code></pre>
           </script>
         </section>
     </section>
@@ -267,7 +261,7 @@ BUILD SUCCESSFUL in 0s
 2 actionable tasks: 1 executed, 1 up-to-date
     	</code></pre>
     	<p>Langsung keluaran aplikasi:</p>
-    	<pre><code style="bash" data-trim>$ ./gradlew run
+    	<pre><code style="bash" data-trim>$ ./gradlew -q run
 Hello world.
     	</code></pre>
     </section>
