@@ -162,6 +162,277 @@
         ## References
         - [More on Computer System Responsiveness: Why do sub-one-second response times make us more productive?](https://www.networkworld.com/article/2232205/microsoft-subnet/more-on-computer-system-responsiveness.html)
       </script></section>
+      <section data-markdown><script type="text/template">
+        ## An Opportunity in 21st Century
+        - Combined:
+          - Pervasive Computing
+          - e-Learning
+        > Pervasive learning promises an exciting learning environment such that users can access content and study them at anytime, anywhere, through any devices.
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## A Dream of Mark Weiser
+        ![Mark Weiser](img/weiser.png) <!-- .element: style="float: right; width: 40%" -->
+        
+
+        "The idea of integrating computers seamlessly into the
+world at large runs counter to a number of present-day
+counter" <!-- .element: style="width: 40%; font-size: .85em" -->
+
+"By pushing computers into background, embodied virtuality will make individuals more aware of the people on the other ends of their computer links" <!-- .element: style="width: 40%; font-size: .85em" -->
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## This Work
+
+        ![ULAN Project](img/ulan.png) <!-- .element: style="float: right; width: 30%" -->
+
+        - ULAN Project (2004~2007) <!-- .element: style="width: 60%; font-size: .7em" -->
+        - Content Management System (CMS) for learning <!-- .element: style="width: 60%; font-size: .7em" -->
+        - International Collaborations <!-- .element: style="width: 60%; font-size: .7em" -->
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## Problem
+        - Ensure a good user experience in network connections.
+
+        Demand of high quality content
+
+        vs 
+
+        Demand of fast access
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## Fuzzy to the rescue!
+
+        - QoS Fairnesss isn't just!
+        - Need adaptive QoS:
+          - Time constraint:
+            High quality
+          - Device capability:
+            Available bandwith, format, frame size
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## Related Works
+        - Lack of user perspective:
+          - Fuzzy-based Service Adaptation Model (FSAM) [Cao et. al.]
+          - Content resolution and frame rate [Minoh et. al.]
+        - Lack of network adaptiveness:
+          - QCompiler
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ![QoS engine](img/QoS.png)
+
+         Input | Output 
+         --- | --- 
+         Network Bandwidth | Content QoS Level
+         Response Time |
+
+      </script></section>
+      <section>
+      <section data-markdown><script type="text/template">
+        ## System Design (input)
+        - Network Bandwidth
+        - Response Time
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## Network Bandwidth
+          $$E_{1}\left(network\\_bandwidth\right)$$
+          $$=\cases{
+  1&\text{if }network\\_bandwidth\geq512kbps\cr
+  \frac{network\\_bandwidth}{512kbps}&\text{if }network\\_bandwidth\lt 512kbps}$$
+
+  <canvas class="stretch" data-chart="line">
+<!-- 
+{
+ "data": {
+ "labels": [0,0.125,0.5,0.875,1],
+  "datasets": [
+   {
+    "data":[1,1,0],
+    "label":"Low","backgroundColor":"rgba(255,170,170,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,1,0],
+    "label":"Medium","backgroundColor":"rgba(170,170,255,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,0,1,1],
+    "label":"High","backgroundColor":"rgba(127,127,127,.8)",
+    "lineTension":0
+   }
+  ]
+ }, 
+ "options": { 
+   "responsive": "true",
+   "legend": {
+        "display": "true",
+        "position": "top"
+      },
+    "scales": {
+     "xAxes": [{
+       "display": "true",
+       "labelString": "Network Bandwidth"
+      }],
+     "yAxes": [{
+       "display": "true",
+       "labelString": "μ",
+       "ticks": {
+                "max": 1,
+                "min": 0,
+                "stepSize": 1
+            }
+      }]
+    }
+
+ }
+}
+-->
+</canvas>
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## Response Time
+        $$E_{2}\left(response\\_time\right)$$
+          $$=\cases{
+  1&\text{if }response\\_time\geq60s\cr
+  \frac{response\\_time}{60s}&\text{if }response\\_time\lt 60s}$$
+
+  <canvas class="stretch" data-chart="line">
+<!-- 
+{
+ "data": {
+ "labels": [0,"1/6",0.5,"5/6",1],
+  "datasets": [
+   {
+    "data":[1,1,0],
+    "label":"Short","backgroundColor":"rgba(255,170,170,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,1,0],
+    "label":"Medium","backgroundColor":"rgba(170,170,255,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,0,1,1],
+    "label":"Long","backgroundColor":"rgba(127,127,127,.8)",
+    "lineTension":0
+   }
+  ]
+ }, 
+ "options": { 
+   "responsive": "true",
+   "legend": {
+        "display": "true",
+        "position": "top"
+      },
+    "scales": {
+     "xAxes": [{
+       "display": "true",
+       "labelString": "Response Time"
+      }],
+     "yAxes": [{
+       "display": "true",
+       "labelString": "μ",
+       "ticks": {
+                "max": 1,
+                "min": 0,
+                "stepSize": 1
+            }
+      }]
+    }
+
+ }
+}
+-->
+</canvas>
+      </script></section>
+      </section>
+      <section data-markdown><script type="text/template">
+        ## System Design (Output)
+
+        ### Membership Function
+
+        <canvas class="stretch" data-chart="line">
+<!-- 
+{
+ "data": {
+ "labels": [0,"1/6","2/6","3/6","4/6","5/6",1],
+  "datasets": [
+   {
+    "data":[1,1,0],
+    "label":"Very low","backgroundColor":"rgba(255,170,170,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,1,0],
+    "label":"Low","backgroundColor":"rgba(170,170,255,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,0,1,0],
+    "label":"Medium","backgroundColor":"rgba(127,127,127,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,0,0,1,0],
+    "label":"High","backgroundColor":"rgba(127,170,127,.8)",
+    "lineTension":0
+   },
+   {
+    "data":[0,0,0,0,0,1,1],
+    "label":"Very high","backgroundColor":"rgba(170,127,127,.8)",
+    "lineTension":0
+   }
+  ]
+ }, 
+ "options": { 
+   "responsive": "true",
+   "legend": {
+        "display": "true",
+        "position": "top"
+      },
+    "scales": {
+     "xAxes": [{
+       "display": "true",
+       "labelString": "Response Time"
+      }],
+     "yAxes": [{
+       "display": "true",
+       "labelString": "μ",
+       "ticks": {
+                "max": 1,
+                "min": 0,
+                "stepSize": 1
+            }
+
+      }]
+    }
+
+ }
+}
+-->
+</canvas>
+      </script></section>
+      <section>
+        <h2>System Design (Mapping)</h2>
+        $$\text{If }E_{1}=\text{"Low"}\And\ E_2=\text{"Short"}\Longrightarrow\ E_3=\text{"Very low"}$$
+
+      $$\text{If }E_{1}=\text{"Low"}\And\ E_2=\text{"Medium"}\Longrightarrow\ E_3=\text{"Low"}$$
+
+      $$\text{If }E_{1}=\text{"Low"}\And\ E_2=\text{"Long"}\Longrightarrow\ E_3=\text{"Medium"}$$
+
+      $$\text{If }E_{1}=\text{"Medium"}\And\ E_2=\text{"Short"}\Longrightarrow\ E_3=\text{"Low"}$$
+
+      $$\text{If }E_{1}=\text{"Medium"}\And\ E_2=\text{"Medium"}\Longrightarrow\ E_3=\text{"Medium"}$$
+
+      $$\text{If }E_{1}=\text{"Medium"}\And\ E_2=\text{"Long"}\Longrightarrow\ E_3=\text{"High"}$$
+
+      $$\text{If }E_{1}=\text{"High"}\And\ E_2=\text{"Short"}\Longrightarrow\ E_3=\text{"Medium"}$$
+
+      $$\text{If }E_{1}=\text{"High"}\And\ E_2=\text{"Medium"}\Longrightarrow\ E_3=\text{"High"}$$
+
+      $$\text{If }E_{1}=\text{"High"}\And\ E_2=\text{"Long"}\Longrightarrow\ E_3=\text{"Very High"}$$
+      </section>
     </div>
   </div>
 
