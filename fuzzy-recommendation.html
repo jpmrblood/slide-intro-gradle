@@ -91,7 +91,8 @@
           - CPU goodness
       </script></section>
       <section>
-        <canvas class="stretch" data-chart="line">
+        <h2>Membership Function</h2>
+        <canvas class="chart stretch" data-chart="line">
 <!-- 
 {
  "data": {
@@ -123,7 +124,10 @@
     "scales": {
      "xAxes": [{
        "display": "true",
-       "labelString": "resource",
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "resource"
+       },
        "ticks": {
                 "max": 1,
                 "min": 0,
@@ -132,8 +136,11 @@
       }],
      "yAxes": [{
        "display": "true",
-       "labelString": "Membership"
-      }]
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "Membership"
+       }
+     }]
     }
 
  }
@@ -239,7 +246,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
   1&\text{if }network\\_bandwidth\geq512kbps\cr
   \frac{network\\_bandwidth}{512kbps}&\text{if }network\\_bandwidth\lt 512kbps}$$
 
-  <canvas class="stretch" data-chart="line">
+  <canvas class="chart stretch" data-chart="line">
 <!-- 
 {
  "data": {
@@ -271,11 +278,17 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     "scales": {
      "xAxes": [{
        "display": "true",
-       "labelString": "Network Bandwidth"
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "Network Bandwidth"
+       }
       }],
      "yAxes": [{
        "display": "true",
-       "labelString": "μ",
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "μ"
+       },
        "ticks": {
                 "max": 1,
                 "min": 0,
@@ -296,7 +309,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
   1&\text{if }response\\_time\geq60s\cr
   \frac{response\\_time}{60s}&\text{if }response\\_time\lt 60s}$$
 
-  <canvas class="stretch" data-chart="line">
+  <canvas class="chart stretch" data-chart="line">
 <!-- 
 {
  "data": {
@@ -328,11 +341,17 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     "scales": {
      "xAxes": [{
        "display": "true",
-       "labelString": "Response Time"
+       "scaleLabel" : {
+         "display": "true",
+         "labelString": "Response Time"
+       }
       }],
      "yAxes": [{
        "display": "true",
-       "labelString": "μ",
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "μ"
+       },
        "ticks": {
                 "max": 1,
                 "min": 0,
@@ -352,7 +371,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
 
         ### Membership Function
 
-        <canvas class="stretch" data-chart="line">
+        <canvas class="chart stretch" data-chart="line">
 <!-- 
 {
  "data": {
@@ -394,11 +413,17 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     "scales": {
      "xAxes": [{
        "display": "true",
-       "labelString": "Response Time"
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "Response Time"
+       }
       }],
      "yAxes": [{
        "display": "true",
-       "labelString": "μ",
+       "scaleLabel": {
+         "display": "true", 
+         "labelString": "μ"
+       },
        "ticks": {
                 "max": 1,
                 "min": 0,
@@ -433,6 +458,20 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
 
       $$\text{If }E_{1}=\text{"High"}\And\ E_2=\text{"Long"}\Longrightarrow\ E_3=\text{"Very High"}$$
       </section>
+      <section data-markdown><script type="text/template">
+        ## System Design (Defuzzification)
+        Center of Gravity
+
+        $\text{Content\_QoS\_level}=\frac{\sum_{i=1}^n (\mu[i]\times y_i)}{n}$
+
+        - $\mu[i]$: the height of output area from the $i$-th rule
+        - $y_i$: the gravity’s horizontal coordinate of output area from the $i$-th rule
+        - $n$: # matching rules of $E_1$ and $E_2$
+      </script></section>
+      <section data-markdown><script type="text/template">
+        ## Prototype
+        ![Prototype](img/prototype.png)
+      </script></section>
     </div>
   </div>
 
@@ -445,7 +484,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     // - https://github.com/hakimel/reveal.js#dependencies
     Reveal.initialize({
       math: {
-    mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+    mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js',
     config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
   },
       dependencies: [{
