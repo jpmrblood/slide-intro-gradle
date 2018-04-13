@@ -1,0 +1,478 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Index Page -- Jan Peter Alexander Rajagukguk</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/jp-win.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+<!--   <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+  <link rel="stylesheet" href="lib/css/dracula.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown
+         data-separator="^\n\n\n"
+         data-separator-vertical="^\n\n"
+         data-separator-notes="^Note:"><script type="text/template">
+      # libvirt Windows
+      ### Jan Peter Alexander Rajagukguk
+      #### 2018-04-13
+
+
+
+      ## Struktur direktori
+
+      Penempatan berkas saya seperti ini:
+
+      ```
+/home/user/VMDisk/
+├── ISO
+├── libvirt-machine
+│   └── WINDOZE
+...
+      ```
+
+
+      ## ISO
+
+      Direktori tempat menyimpan ISO saya.
+      ```
+/home/user/VMDisk/ISO/
+├── BlankOn-10.0-desktop-amd64.iso
+├── debian-8.7.1-amd64-netinst.iso
+├── debian-9.3.0-amd64-netinst.iso
+├── firmware-9.3.0-amd64-netinst.iso
+├── SW_DVD9_Win_Pro_10_1709.1_64BIT_English_Pro_Ent_EDU_N_MLF_X21-67518.ISO
+├── ubuntu-16.04.2-desktop-amd64.iso
+├── V834394-01.iso
+├── V834397-01.iso
+├── virtio-win.iso
+└── xubuntu-16.04-desktop-i386.iso
+      ```
+
+
+      ## libvirt-machine
+      Tempat menaruh *image* libvirt
+```
+/home/user/VMDisk/libvirt-machine/
+└── WINDOZE
+    └── drive_c.qcow2
+```
+
+
+
+      ## Pasang Paket
+
+      ```
+      sudo apt install kvm libvirt-bin ubuntu-vm-builder
+      sudo apt install virt-manager
+      sudo apt install ovmf
+      ```
+
+
+      ## KVM dan libvirt
+      ```
+      sudo apt install kvm libvirt-bin ubuntu-vm-builder
+      ```
+      Paket `ubuntu-vm-builder` sebenarnya tidak wajib. Saya memakai distro varian Xenial
+      makanya saya sertakan paket itu.
+
+
+      ## virt-manager (GUI)
+      ```
+      sudo apt install virt-manager
+      ```
+      ![virt-manager](img/2018/04/virt-manager.png)
+
+      Kalau sudah bosan cara *heker,* bisa gunakan perkakas GUI yang sewajarnya. :P
+
+
+      ## Pasang TianaCore (UEFI)
+      ```
+      sudo apt install ovmf
+      ```
+
+      [TianaCore](https://www.tianocore.org) adalah sebuah proyek EDK II untuk
+      menyediakan dukungan UEFI ke mesin virtual (KVM dan sejenisnya).
+
+
+
+      ## Unduh ISO
+
+      ```
+      qemu-img create -f qcow2 ~/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2 50G
+      wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win.iso \
+         -O ~/VMDisk/ISO/virtio-win.iso
+      ```
+
+
+
+      # Restart™ Host®
+      #### Anti ribet, restart PC℠
+
+
+
+      ## Buat Image
+```
+mkdir -p ~/VMDisk/libvirt-machine/WINDOZE
+qemu-img create -f qcow2 \
+   ~/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2 \
+   50G
+```
+Ukuran ruang penyimpanan 50GB.
+
+
+
+      ## Install Windows Guest
+
+      ```
+virt-install --connect qemu:///system -n WINDOZE -r 8192 --cpu host --vcpus=2 \
+   --disk path=/home/user/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2,size=50,bus=virtio \
+   --disk /home/user/VMDisk/ISO/SW_DVD9_Win_Pro_10_1709.1_64BIT_English_Pro_Ent_EDU_N_MLF_X21-67518.ISO,device=cdrom,bus=sata \
+   --disk /home/user/VMDisk/ISO/virtio-win.iso,device=cdrom,bus=sata \
+   --os-type windows --os-variant win2k8 --network network=default,model=virtio \
+   --graphics spice --noautoconsole  --boot uefi
+        ```
+
+
+        ## Konfigurasi Mesin VM
+        ```
+        virt-install --connect qemu:///system -n WINDOZE -r 8192 --cpu host --vcpus=2
+        ```
+        <dl> <dt>`-n WINDOZE`</dt><dd>nama VM</dd>
+        <dt>`-r 8192`</dt><dd>besar memori 8GB</dd>
+        <dt>`--cpu host --vcpus=2`</dt><dd>2 CPU virtual (bergantian dengan VM lain, tidak ekslusif)</dd></dl>
+
+
+        ## Ruang Penyimpan Utama
+        ```
+        --disk path=/home/user/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2,size=50,bus=virtio
+        ```
+        Ruang penyimpanan yang dipakai digunakan dengan penggerak VirtIO *(paravirtualized).*
+
+
+        ## ISO Windoze Asli (UI)
+        ```
+        --disk /home/user/VMDisk/ISO/SW_DVD9_Win_Pro_10_1709.1_64BIT_English_Pro_Ent_EDU_N_MLF_X21-67518.ISO,device=cdrom,bus=sata
+        ```
+        Biasanya orang pakai penggerak IDE untuk membaca ISO, tapi saya lebih suka pakai penggerak SATA.
+        Lebih menggambarkan arsitektur PC modern, IMHO. :P
+
+
+        ## ISO Penggerak VirtIO
+        ```
+        --disk /home/user/VMDisk/ISO/virtio-win.iso,device=cdrom,bus=sata
+        ```
+        Windoze tidak mendukung VirtIO langsung. Penggerak butuh dipasang saat instalasi
+        agar perangkat dapat dikenali.
+
+
+        ## Konfigurasi KVM
+        ```
+        --os-type windows --os-variant win2k8 --network network=default,model=virtio
+        ```
+        <dl><dt>`--os-type windows --os-variant win2k8`</dt>
+          <dd>Konfigurasi KVM untuk Windows Server 2008 dan terbaru.</dd>
+          <dt>`--network network=default,model=virtio`</dt>
+          <dd>Tipe jaringan NAT biasa, dengan perangkat jaringan VirtIO.
+          Lihat [WIKI](https://wiki.libvirt.org/page/Networking) kalau mau konfigurasi lebih ribet dan *funky.*
+          </dd>
+        </dt>
+
+
+        ## Koneksi Klien libvirt
+        ```
+        --graphics spice --noautoconsole  --boot uefi
+        ```
+        <dl><dt>`--graphics spice`</dt>
+        <dd>Bisa VNC atau Spice, saya pilih [Spice](https://www.linux-kvm.org/page/SPICE).</dd>
+        <dt>`--noautoconsole`</dt><dd>Jangan login ke terminal VM.</dd>
+        <dt>`--boot uefi`</dt><dd>Gunakan UEFI.</dd>
+        </dl>
+
+
+
+        ## Buka tampilan VM
+        ```
+        virt-viewer -a WINDOZE
+        ```
+        > Enaknya UEFI yang menjadi ribet juga adalah *boot*-nya terlalu cepat sehingga tahu-tahu sudah sampai ke halaman UEFI.
+
+
+        ## Langkah Normal UEFI (1)
+        ![TianoCore "BIOS"](img/2018/04/win-setup/x00-tiano-firmware-uefi.png)
+
+
+        ## Langkah Normal UEFI (2)
+        DVD Windoze kalau tak dipencet tak mau *boot* otomatis.
+        ![Windows DVD press key](img/2018/04/win-setup/x01-press-any-key-to-boot-from-dvd.png)
+
+
+        ## Langkah Normal UEFI (3)
+        Biasanya `virt-viewer -a Windoze` tahu-tahu sudah sampai *UEFI Shell.*
+        ![TianoCore "BIOS"](img/2018/04/win-setup/x02-uefi-shell.png)
+
+
+
+        ## UEFI Shell boot Windows DVD
+        Kalau sudah di *UEFI Shell*, jangan panik. Ketik di sana perintah:
+        ```
+        FS0:\EFI\BOOT\BOOTX64.EFI
+        ```
+        Kali ini jangan lupa pencet sesuatu pada [Langkah Normal UEFI(2)](#/7/2)
+
+
+
+        ## Memulai Instalasi Windows
+        ![Windows Setup](img/2018/04/win-setup/x03-windows-loading.png)
+
+
+        ## Pasang
+        ![Install Now](img/2018/04/win-setup/01-install.png)
+
+
+        ## Pilih produk yang mau dipasang
+        ![Product selection](img/2018/04/win-setup/02-select-windoze-edu.png)
+
+
+        ## Bla... bla... Setuju!
+        ![Product selection](img/2018/04/win-setup/03-accept-eula.png)
+
+
+        ## Pilih Custom
+        ![Select custom installation](img/2018/04/win-setup/04-select-Custom.png)
+
+
+
+        Drive tak terdeteksi, pilih *Load driver*
+        ![load driver](img/2018/04/win-setup/05-a-no-drive.png)
+
+
+        Pilih *Browse* untuk mencari penggerak.
+        ![Select browse](img/2018/04/win-setup/05-b-load-driver-browse.png)
+
+
+        Pilih `E:\viostor\w10\amd64` (ISO `VirtIO` di `E:`)
+        ![E:\viostor\w10\amd64](img/2018/04/win-setup/05-c-pick-viostor_w10_amd64.png)
+
+
+        Ruang penyimpan pun terdeteksi.
+        ![Drive](img/2018/04/win-setup/05-e-drive-detected.png)
+
+
+
+        ## Pilih *New* &#8594; *Apply*
+        ![new partition](img/2018/04/win-setup/06-a-new-storage-partition.png)
+
+
+        Ditanyakan keyakinan pilih *OK*
+        ![are you sure?](img/2018/04/win-setup/06-b-warn-dialog.png)
+
+
+        Susunan partisi UEFI pun terbentuk, pilih *Next*
+        ![UEFI Partition](img/2018/04/win-setup/06-c-new-storage-partition.png)
+
+
+
+        ## Saat tepat sapa keluarga
+        ![say hello](img/2018/04/win-setup/07-run-install-like-usual.png)
+
+
+
+        Pilih Indonesia
+
+        ![Indonesia](img/2018/04/win-setup/08-a-region-indonesia.png)
+
+
+        Pilih *Yes*
+
+        ![Keyboard layout](img/2018/04/win-setup/08-b-keyboard-layout.jpg)
+
+
+        Pilih *Skip*
+
+        ![Skip](img/2018/04/win-setup/08-c-additional-keyboard-layout.png)
+
+
+        Pilih *Skip for now* karena penggerak `VirtIO` belum ada
+        ![Skip](img/2018/04/win-setup/08-d-network-skip-for-now.png)
+
+
+        Sampai sini saya tak mau memandu lagi. Anda pasti bisa!
+        ![Add user](img/2018/04/win-setup/08-e-setup-user.png)
+
+
+
+        ## Tanpa `VirtIO`
+        ![Plain 1024x768](img/2018/04/plain-old-windoze.jpg)
+
+
+
+        # Driver
+
+
+
+        ## Untuk Semua Perangkat VirtIO
+        - Buka *Device Manager* dengan tombol META+R (Windows Run) dan ketik:
+          ```
+          devmgmt.msc
+          ```
+        - **Untuk setiap perangkat** yang ada tanda seru, pilih *Update Driver.*
+        - Cari penggerak (driver) di `E:`, maka Windoze akan otomatis mendeteksi penggerak yang dibutuhkan.
+
+
+
+        ## BONUS
+        # KVM Guest Agent
+
+
+
+        ## Sisi Inang
+        Matikan VM lalu:
+        ```
+        $ cat > /tmp/attach-guest.xml << EOF
+<channel type="unix">
+  <source mode="bind"/>
+  <target type="virtio" name="org.qemu.guest_agent.0"/>
+</channel>
+EOF
+
+        $ virsh attach-device WINDOZE /tmp/attach-guest.xml --config
+        $ virsh start WINDOZE
+        ```
+Yang artinya:
+
+
+        Buat Konfigurasi XML
+```
+$ cat > /tmp/attach-guest.xml << EOF
+<channel type="unix">
+  <source mode="bind"/>
+  <target type="virtio" name="org.qemu.guest_agent.0"/>
+</channel>
+EOF
+```
+
+
+        Tambahkan ke dalam VM
+        ```
+        $ virsh attach-device WINDOZE /tmp/attach-guest.xml --config
+        ```
+
+
+        ## Jalankan VM
+        ```
+        $ virsh start WINDOZE
+        ```
+
+
+
+        ## Sisi VM Windoze
+        - Pada VM Windoze, buka folder `E:\guest-agent`
+        - Jalankan `qemu-ga-x86_64.msi` untuk memasang agen.
+        - Pasang seperti biasa.
+
+
+
+        ## Test Perintah
+
+
+        Cek perintah apa saja yang didukung:
+        ```
+        $ virsh qemu-agent-command WINDOZE '{"execute":"guest-info"}' | python3 -mjson.tool
+        ```
+        > Saya pakai pemformat JSON dari Python3 biar bagus keluarannya.
+        > Karena banyak, saya tak tampilkan di sini.
+
+
+        Cek ping:
+        ```
+        $ virsh qemu-agent-command WINDOZE '{"execute":"guest-ping"}'
+{"return":{}}
+
+        ```
+
+
+        Cek jaringan:
+        ```
+        $ virsh qemu-agent-command WINDOZE '{"execute":"guest-network-get-interfaces"}' | python3 -mjson.tool
+        ```
+
+
+        Memulai ulang VM:
+        ```
+        $ virsh reboot --mode agent WINDOZE
+        ```
+
+
+
+        ## Referensi
+        - [Qemu Guest Agent](https://wiki.libvirt.org/page/Qemu_guest_agent)
+        - [Using UEFI with QEMU](https://fedoraproject.org/wiki/Using_UEFI_with_QEMU)
+        - [TianoCore EDK II Project](https://github.com/tianocore/edk2)
+        - [KVM Working 2012 R2](https://gist.github.com/ilude/a083934402ee761c402b7ab3ae9bcda7#file-kvm-working-2012-r2)
+        - [Windows VirtIO Drivers](https://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers)
+        - [Qemu Guest Agent Integration](http://wiki.stoney-cloud.org/wiki/Qemu_Guest_Agent_Integration)
+        - [Features/GuestAgent](https://wiki.qemu.org/Features/GuestAgent)
+        - [How to Open Device Manager in Windows 10, 7 & 8. Easily](https://www.drivereasy.com/knowledge/a-common-and-easy-way-to-access-device-manager-in-windows/)
+        - [The List of Os Variants in KVM](http://thomasmullaly.com/2014/11/16/the-list-of-os-variants-in-kvm/)
+
+
+
+        ## Special Mention
+        - [Metro Colors](colorlib.com/etc/metro-colors/), untuk salindia
+        </script></section>
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      dependencies: [{
+          src: 'plugin/markdown/marked.js'
+        },
+        {
+          src: 'plugin/markdown/markdown.js'
+        },
+        {
+          src: 'plugin/notes/notes.js',
+          async: true
+        },
+        {
+          src: 'plugin/highlight/highlight.js',
+          async: true,
+          callback: function() {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+      ],
+      slideNumber: true,
+      history: true,
+			center: true,
+    });
+  </script>
+</body>
+
+</html>
