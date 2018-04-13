@@ -117,26 +117,26 @@
       ## Unduh ISO
 
       ```
-      qemu-img create -f qcow2 ~/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2 50G
       wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win.iso \
          -O ~/VMDisk/ISO/virtio-win.iso
       ```
 
 
 
+      ## Buat Image
+      ```
+      mkdir -p ~/VMDisk/libvirt-machine/WINDOZE
+      qemu-img create -f qcow2 \
+         ~/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2 \
+         50G
+      ```
+      Ukuran ruang penyimpanan 50GB.
+
+
+
       # Restart™ Host®
       #### Anti ribet, restart PC℠
 
-
-
-      ## Buat Image
-```
-mkdir -p ~/VMDisk/libvirt-machine/WINDOZE
-qemu-img create -f qcow2 \
-   ~/VMDisk/libvirt-machine/WINDOZE/drive_c.qcow2 \
-   50G
-```
-Ukuran ruang penyimpanan 50GB.
 
 
 
@@ -226,7 +226,8 @@ virt-install --connect qemu:///system -n WINDOZE -r 8192 --cpu host --vcpus=2 \
 
 
         ## Langkah Normal UEFI (3)
-        Biasanya `virt-viewer -a Windoze` tahu-tahu sudah sampai *UEFI Shell.*
+        Biasanya `virt-viewer -a WINDOZE` tahu-tahu sudah sampai *UEFI Shell*
+        karena *boot* terlalu cepat.
         ![TianoCore "BIOS"](img/2018/04/win-setup/x02-uefi-shell.png)
 
 
@@ -320,7 +321,7 @@ virt-install --connect qemu:///system -n WINDOZE -r 8192 --cpu host --vcpus=2 \
 
 
 
-        ## Tanpa `VirtIO`
+        Tanpa `VirtIO`, Windoze tidak *fullscreen.* Saatnya memasang penggerak *(driver).*
         ![Plain 1024x768](img/2018/04/plain-old-windoze.jpg)
 
 
