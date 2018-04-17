@@ -4,6 +4,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/icon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+  <link rel="manifest" href="/icon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
 
   <title>Dasar-dasar Gradle -- Jan Peter Alexander Rajagukguk</title>
 
@@ -55,18 +72,18 @@ Total time: 2.229 secs
         </section>
         <section>
         	<h2>Gradle Versi Terbaru</h2>
-        	
+
         		<p>Memasang gradle:</p>
         	<pre><code style="bash" data-trim  data-noescape>
         		$ gradle wrapper --gradle-version 4.6
         	</code></pre>
         	Membuat proyek aplikasi Java baru:
         	<pre><code style="bash" data-trim>
-        		$ ./gradlew init --type java-application \ 
+        		$ ./gradlew init --type java-application \
         		     --test-framework spock
         	</code></pre>
         	<blockquote>
-        		Java Application tidak ada pada versi 2.10 (versi OS). 
+        		Java Application tidak ada pada versi 2.10 (versi OS).
         		Itu sebabnya, pembungkus versi terbaru harus diunduh
         		terlebih dahulu.
         	</blockquote>
@@ -128,7 +145,7 @@ Total time: 2.229 secs
     <section>
     	<h2><code>settings.gradle</code></h2>
     	<pre><code class="gradle">/*
-// To declare projects as part of a multi-project build 
+// To declare projects as part of a multi-project build
 // use the 'include' method
 include 'shared'
 include 'api'
@@ -175,7 +192,7 @@ $ ./gradlew tasks --all</code></pre></dd>
     	<pre><code style="bash" data-trim data-noescape>
     		$ mkdir test && cd test
     		$ gradle wrapper --gradle-version 4.6
-    		$ ./gradlew init --type java-application \ 
+    		$ ./gradlew init --type java-application \
         		--test-framework spock
         </code></pre>
         </section>
@@ -223,7 +240,7 @@ build/distributions/
 └── test.zip
 </code></pre>
 <blockquote>
-	Berkas-berkas ini berisi aplikasi yang siap di-<em>deploy</em> 
+	Berkas-berkas ini berisi aplikasi yang siap di-<em>deploy</em>
 	di mana saja. Sudah ada Jar, pustaka, dan skrip untuk mengeksekusi.
 </blockquote>
 </section>
@@ -253,7 +270,7 @@ test
     	<p>Dengan info dari Gradle:</p>
     	<pre><code style="bash" data-trim>$ ./gradlew run
 
-> Task :run 
+> Task :run
 Hello world.
 
 

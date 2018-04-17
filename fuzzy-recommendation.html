@@ -4,6 +4,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="apple-touch-icon" sizes="57x57" href="/icon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/icon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/icon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/icon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/icon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/icon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/icon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+  <link rel="manifest" href="/icon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
 
   <title>Dasar-dasar Gradle -- Jan Peter Alexander Rajagukguk</title>
 
@@ -84,7 +101,7 @@
         - Total connection can be handle
         - Vary between systems.
         - To normalize:
-        
+
         $\text{avalaible resource} = \frac{\text{available memory}}{\text{memory usage per instance}} + \frac{k}{\text{average processing time}}$
         - $k$ needs to be considered
           - CPU core
@@ -93,7 +110,7 @@
       <section>
         <h2>Membership Function</h2>
         <canvas class="chart stretch" data-chart="line">
-<!-- 
+<!--
 {
  "data": {
  "labels": [0,0.5,0.10,0.15,0.20,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95,1],
@@ -114,8 +131,8 @@
     "lineTension":0
    }
   ]
- }, 
- "options": { 
+ },
+ "options": {
    "responsive": "true",
    "legend": {
         "display": "true",
@@ -125,7 +142,7 @@
      "xAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "resource"
        },
        "ticks": {
@@ -137,7 +154,7 @@
      "yAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "Membership"
        }
      }]
@@ -150,7 +167,7 @@
       </section>
       <section data-markdown><script type="text/template">
         ## Addition to Content QoS
-        
+
         IF $\textbf{resource}$ IS **high** THEN $\textbf{content_qos}$ IS $\textbf{very high}$
 
         IF $\textbf{resource}$ IS **medium** THEN $\textbf{content_qos}$ IS $\textbf{high}$
@@ -179,7 +196,7 @@
       <section data-markdown><script type="text/template">
         ## A Dream of Mark Weiser
         ![Mark Weiser](img/weiser.png) <!-- .element: style="float: right; width: 40%" -->
-        
+
 
         "The idea of integrating computers seamlessly into the
 world at large runs counter to a number of present-day
@@ -202,7 +219,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
 
         Demand of high quality content
 
-        vs 
+        vs
 
         Demand of fast access
       </script></section>
@@ -227,8 +244,8 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
       <section data-markdown><script type="text/template">
         ![QoS engine](img/QoS.png)
 
-         Input | Output 
-         --- | --- 
+         Input | Output
+         --- | ---
          Network Bandwidth | Content QoS Level
          Response Time |
 
@@ -247,7 +264,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
   \frac{network\\_bandwidth}{512kbps}&\text{if }network\\_bandwidth\lt 512kbps}$$
 
   <canvas class="chart stretch" data-chart="line">
-<!-- 
+<!--
 {
  "data": {
  "labels": [0,0.125,0.5,0.875,1],
@@ -268,8 +285,8 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     "lineTension":0
    }
   ]
- }, 
- "options": { 
+ },
+ "options": {
    "responsive": "true",
    "legend": {
         "display": "true",
@@ -279,14 +296,14 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
      "xAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "Network Bandwidth"
        }
       }],
      "yAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "μ"
        },
        "ticks": {
@@ -310,7 +327,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
   \frac{response\\_time}{60s}&\text{if }response\\_time\lt 60s}$$
 
   <canvas class="chart stretch" data-chart="line">
-<!-- 
+<!--
 {
  "data": {
  "labels": [0,"1/6",0.5,"5/6",1],
@@ -331,8 +348,8 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     "lineTension":0
    }
   ]
- }, 
- "options": { 
+ },
+ "options": {
    "responsive": "true",
    "legend": {
         "display": "true",
@@ -349,7 +366,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
      "yAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "μ"
        },
        "ticks": {
@@ -372,7 +389,7 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
         ### Membership Function
 
         <canvas class="chart stretch" data-chart="line">
-<!-- 
+<!--
 {
  "data": {
  "labels": [0,"1/6","2/6","3/6","4/6","5/6",1],
@@ -403,8 +420,8 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
     "lineTension":0
    }
   ]
- }, 
- "options": { 
+ },
+ "options": {
    "responsive": "true",
    "legend": {
         "display": "true",
@@ -414,14 +431,14 @@ counter" <!-- .element: style="width: 40%; font-size: .85em" -->
      "xAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "Response Time"
        }
       }],
      "yAxes": [{
        "display": "true",
        "scaleLabel": {
-         "display": "true", 
+         "display": "true",
          "labelString": "μ"
        },
        "ticks": {
